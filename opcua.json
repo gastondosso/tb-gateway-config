@@ -1,0 +1,28 @@
+{
+  "server": {
+    "name": "Siemens Gateway Docker",
+    "url": "opc.tcp://opcua:4840/easypanel/s7gateway",
+    "timeoutInMillis": 5000,
+    "scanPeriodInMillis": 1000,
+    "disableSubscriptions": false,
+    "subCheckPeriodInMillis": 100,
+    "showMap": false,
+    "security": "Basic128Rsa15",
+    "identity": {
+      "type": "anonymous"
+    },
+    "mapping": [
+      {
+        "deviceNodePattern": "Root\\.Objects\\.Siemens_S7_317",
+        "deviceNamePattern": "PLC_Siemens",
+        "attributes": [],
+        "timeseries": [
+          {
+            "key": "temperature",
+            "path": "${ns=2;s=Temperatura_Horno}"
+          }
+        ]
+      }
+    ]
+  }
+}
