@@ -1,0 +1,17 @@
+thingsboard:
+  host: thingsboard.gastondosso.site
+  port: 1883
+  remoteConfiguration: true
+  security:
+    accessToken: "CneHONCvhzia7XqgVaRP"
+
+storage:
+  type: memory
+  read_records_count: 100
+  max_records_count: 100000
+
+connectors:
+  -
+    name: OPC-UA Connector
+    type: opcua
+    configuration: opcua.json
