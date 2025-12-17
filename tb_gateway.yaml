@@ -10,8 +10,4 @@ storage:
   read_records_count: 100
   max_records_count: 100000
 
-connectors:
-  -
-    name: OPC-UA Connector
-    type: opcua
-    configuration: opcua.json
+connectors: []
