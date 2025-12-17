@@ -1,10 +1,41 @@
-FROM thingsboard/tb-gateway:latest
+version: '3.4'
+services:
+  # ThingsBoard IoT Gateway Service Configuration
+  tb-gateway:
+    image: thingsboard/tb-gateway:3.7-stable
+    container_name: tb-gateway
+    restart: always
 
-# Crear directorios de configuración
-RUN mkdir -p /thingsboard_gateway/config
+    # Ports bindings - required by some connectors
+    ports:
+        - "5000:5000" # Comment if you don't use REST connector and change if you use another port
+        # Uncomment and modify the following ports based on connector usage:
+#        - "1052:1052" # BACnet connector
+#        - "5026:5026" # Modbus TCP connector (Modbus Slave)
+#        - "50000:50000/tcp" # Socket connector with type TCP
+#        - "50000:50000/udp" # Socket connector with type UDP
 
-# Copiar nuestros archivos de configuración
-COPY tb_gateway.yaml /thingsboard_gateway/config/tb_gateway.yaml
-COPY opcua.json /thingsboard_gateway/config/opcua.json
+    # Necessary mapping for Linux
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
-# El comando de inicio ya viene en la imagen base
+    # Environment variables
+    environment:
+      - host=thingsboard.gastondosso.site
+      - port=1883
+      - accessToken=CneHONCvhzia7XqgVaRP
+
+    # Volumes bind
+    volumes:
+      - tb-gw-config:/thingsboard_gateway/config
+      - tb-gw-logs:/thingsboard_gateway/logs
+      - tb-gw-extensions:/thingsboard_gateway/extensions
+
+# Volumes declaration for configurations, extensions and configuration
+volumes:
+  tb-gw-config:
+    name: tb-gw-config
+  tb-gw-logs:
+    name: tb-gw-logs
+  tb-gw-extensions:
+    name: tb-gw-extensions
